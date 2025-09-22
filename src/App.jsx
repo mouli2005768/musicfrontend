@@ -9,7 +9,7 @@ function App() {
   const [user, setUser] = useState(null);
   const [page, setPage] = useState("landing"); // default is landing
 
-  // Load user but don't auto-skip landing
+  // Load user from localStorage (but don’t auto-skip landing)
   useEffect(() => {
     const savedUser = localStorage.getItem("user");
     if (savedUser) {
@@ -28,23 +28,32 @@ function App() {
 
   return (
     <div className="App">
+      {/* Landing Page */}
       {page === "landing" && <SinglePage goToSignIn={() => setPage("signin")} />}
 
+      {/* Sign In Page */}
       {page === "signin" && (
         <SignIn
           setUser={(u) => {
             setUser(u);
-            setPage("home"); // go to home/admin after login
+            if (u.role === "1") {
+              setPage("admin"); // admin dashboard
+            } else {
+              setPage("home"); // normal user
+            }
           }}
         />
       )}
 
-      {page === "home" &&
-        (user?.role === "1" ? (
-          <AdminPage fullname={user.fullname} setUser={setUser} setPage={setPage} />
-        ) : (
-          <Home fullname={user?.fullname} setUser={setUser} setPage={setPage} />
-        ))}
+      {/* Normal User Home */}
+      {page === "home" && (
+        <Home fullname={user?.fullname} setUser={setUser} setPage={setPage} />
+      )}
+
+      {/* Admin Dashboard */}
+      {page === "admin" && (
+        <AdminPage fullname={user?.fullname} setUser={setUser} setPage={setPage} />
+      )}
     </div>
   );
 }

@@ -6,11 +6,11 @@ import { MdFavorite, MdLogout, MdSpaceDashboard } from "react-icons/md";
 import { FaPlay } from "react-icons/fa";
 import { IoLibrary } from "react-icons/io5";
 
-function Sidebar({ setUser,setPage }) {
+function Sidebar({ setUser, setPage }) {
   const handleSignOut = () => {
     localStorage.removeItem("user");
     setUser(null);
-    setPage("landing"); // ✅ go back to landing
+    setPage("landing"); // ✅ go back to SinglePage.jsx
   };
 
   return (
@@ -22,10 +22,10 @@ function Sidebar({ setUser,setPage }) {
       />
 
       <div>
-        <Sidebarbutton title="Explore" to="/Feed" icon={<MdSpaceDashboard />} />
-        <Sidebarbutton title="Favourites" to="/Favourites" icon={<MdFavorite />} />
-        <Sidebarbutton title="Player" to="/Player" icon={<FaPlay />} />
-        <Sidebarbutton title="Library" to="/" icon={<IoLibrary />} />
+        <Sidebarbutton title="Explore" to="/feed" icon={<MdSpaceDashboard />} />
+        <Sidebarbutton title="Favourites" to="/favourites" icon={<MdFavorite />} />
+        <Sidebarbutton title="Player" to="/player/1" icon={<FaPlay />} />
+        <Sidebarbutton title="Premium" to="/premium" icon={<IoLibrary />} />
       </div>
 
       {/* ✅ Signout button triggers handleSignOut */}

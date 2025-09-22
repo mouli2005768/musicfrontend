@@ -1,0 +1,49 @@
+/* Premium container should fill remaining space next to sidebar */
+.premium-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  height: 100%; /* Full height of main content */
+  width: 100%;  /* Full width of main content */
+  
+  text-align: center;
+  background: linear-gradient(135deg, #000000, #333333);
+  color: white;
+  padding: 2rem;
+  box-sizing: border-box;
+}
+
+/* Title */
+.premium-title {
+  font-size: 2.5rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+  color: #ffffff;
+}
+
+/* Description */
+.premium-text {
+  font-size: 1.2rem;
+  margin-bottom: 2rem;
+  color: #aaaaaa;
+}
+
+/* Button */
+.premium-btn {
+  background: #ffffff;
+  border: none;
+  padding: 12px 25px;
+  font-size: 1.1rem;
+  border-radius: 30px;
+  cursor: pointer;
+  color: #000000;
+  font-weight: bold;
+  transition: 0.3s;
+}
+
+.premium-btn:hover {
+  background: #cccccc;
+  color: #000000;
+}

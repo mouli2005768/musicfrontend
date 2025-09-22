@@ -7,18 +7,17 @@ import Favourites from "../Favourites";
 import "./Home.css";
 import Sidebar from "../../components/sidebar";
 
-function Home({ fullname , setUser }) {
+function Home({ fullname, setUser, setPage }) {
   return (
     <div className="main-body">
-      {/* Sidebar */}
-       <Sidebar setUser={setUser} />
-
+      {/* Sidebar gets setPage so it can redirect on logout */}
+      <Sidebar setUser={setUser} setPage={setPage} />
 
       {/* Routes for Home */}
       <Routes>
         <Route path="/" element={<Library />} />
         <Route path="/feed" element={<Feed />} />
-        <Route path="/player" element={<Player />} />
+        <Route path="/player/:id" element={<Player />} />
         <Route path="/favourites" element={<Favourites />} />
       </Routes>
     </div>
