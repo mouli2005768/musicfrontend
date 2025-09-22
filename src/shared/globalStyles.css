@@ -1,0 +1,15 @@
+.screen-container {
+  width: calc(100% - 100px);
+  height: 100%;
+  border-radius: 15px;
+  overflow: hidden;
+
+  /* Gradient + glass look */
+  background: linear-gradient(
+    135deg,
+    rgba(0, 0, 0, 0.9),
+    rgba(79, 71, 79, 0.6),
+    rgba(75, 165, 81, 0.5)
+  );
+  backdrop-filter: blur(8px);
+}

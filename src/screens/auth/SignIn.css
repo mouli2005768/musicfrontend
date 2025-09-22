@@ -1,0 +1,155 @@
+/* Container to center the popup */
+.auth-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: #000; /* pure black background */
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Popup Box with animated crystal gradient */
+.auth-box {
+  position: relative;
+  width: 340px;
+  padding: 30px 40px;
+  border-radius: 20px;
+  background: linear-gradient(
+    135deg,
+    rgba(104, 255, 203, 0.2) 0%,
+    rgba(160, 94, 255, 0.2) 50%,
+    rgba(104, 255, 203, 0.2) 100%
+  );
+  backdrop-filter: blur(12px);
+  box-shadow: 0 0 25px rgba(140, 255, 220, 0.25);
+  overflow: hidden;
+  animation: crystalMove 6s ease-in-out infinite alternate;
+}
+
+/* Gradient Animation for crystal effect */
+@keyframes crystalMove {
+  0% {
+    background: linear-gradient(
+      135deg,
+      rgba(104, 255, 203, 0.25),
+      rgba(160, 94, 255, 0.25)
+    );
+  }
+  50% {
+    background: linear-gradient(
+      225deg,
+      rgba(160, 94, 255, 0.35),
+      rgba(104, 255, 203, 0.35)
+    );
+  }
+  100% {
+    background: linear-gradient(
+      135deg,
+      rgba(104, 255, 203, 0.25),
+      rgba(160, 94, 255, 0.25)
+    );
+  }
+}
+
+/* Tabs (Login / Register) */
+.tabs {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px;
+}
+.tab {
+  background: none;
+  border: none;
+  font-size: 18px;
+  padding: 10px 20px;
+  cursor: pointer;
+  transition: color 0.3s, font-weight 0.3s;
+  color: #cfcfcf;
+}
+.tab.active {
+  color: #7affc3;
+  font-weight: bold;
+}
+.divider {
+  width: 1px;
+  height: 20px;
+  background: rgba(255, 255, 255, 0.3);
+}
+
+/* Form Content */
+.form-content {
+  display: flex;
+  flex-direction: column;
+}
+.form-content label {
+  font-size: 14px;
+  margin-bottom: 4px;
+  color: #e0e0e0;
+}
+.form-content input {
+  padding: 12px;
+  margin-bottom: 15px;
+  border-radius: 8px;
+  border: 1px solid rgba(122, 255, 195, 0.4);
+  background: rgba(122, 255, 195, 0.1); /* light green shade */
+  color: #e6ffe9;
+  outline: none;
+  transition: border 0.3s, box-shadow 0.3s;
+}
+.form-content input::placeholder {
+  color: rgba(230, 255, 233, 0.6);
+}
+.form-content input:focus {
+  border: 1px solid #7affc3;
+  box-shadow: 0 0 10px rgba(122, 255, 195, 0.4);
+}
+
+/* Forgot Password (bottom-left) */
+.bottom-links {
+  display: flex;
+  justify-content: flex-start;
+  margin-bottom: 15px;
+}
+.forgot {
+  font-size: 13px;
+  color: #8ef9f3;
+  cursor: pointer;
+  text-decoration: none;
+}
+.forgot:hover {
+  text-decoration: underline;
+}
+
+/* Submit Button */
+.submit-btn {
+  background: linear-gradient(90deg, #7affc3, #a05eff);
+  color: #000;
+  padding: 12px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-bottom: 20px;
+  font-weight: 600;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+.submit-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0 15px rgba(122, 255, 195, 0.4);
+}
+
+/* Not have an account (bottom center) */
+.signup-link {
+  text-align: center;
+  font-size: 14px;
+  color: #cfcfcf;
+}
+.signup-link .switch {
+  color: #7affc3;
+  cursor: pointer;
+  font-weight: 600;
+}
+.signup-link .switch:hover {
+  text-decoration: underline;
+}
+

@@ -1,0 +1,42 @@
+.btn-link {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+  margin: 6px 0;
+}
+
+.btn-body {
+  display: flex;
+  align-items: center;     /* keep icon & text side by side */
+  justify-content: flex-start;
+  gap: 10px;               /* space between icon and text */
+  padding: 8px 14px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  background: transparent;
+  color: #ccc;
+  font-size: 14px;
+}
+
+.btn-body:hover {
+  background: #353434;
+  box-shadow: 0 0 6px rgba(255, 255, 255, 0.3);
+  color: #fff;
+}
+
+.btn-body.active {
+  background: #505351;   /* green */
+  color: #fff;
+}
+
+.btn-icon {
+  flex-shrink: 0;
+  font-size: 18px;
+}
+
+.btn-title {
+  font-size: 14px;
+  font-weight: 500;
+  white-space: nowrap;   /* prevent wrapping */
+}
