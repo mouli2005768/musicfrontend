@@ -2,7 +2,7 @@ import axios from "axios";
 
 // ✅ Base axios instance
 const API = axios.create({
-  baseURL: "http://localhost:8081/api", // Spring Boot backend root
+  baseURL: "http://localhost:8081/musicspring/api", // Spring Boot backend root
 });
 
 // ================== AUTH ==================
