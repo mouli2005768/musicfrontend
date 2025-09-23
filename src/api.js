@@ -1,17 +1,23 @@
 import axios from "axios";
 
+// Detect backend base URL dynamically
+let baseURL = "http://localhost:8081/api"; // default (local run)
+
+// If backend is running inside Tomcat with "musicspring" context
+if (window.location.href.includes("musicspring")) {
+  baseURL = "http://localhost:8081/musicspring/api";
+}
+
 // ✅ Base axios instance
-const API = axios.create({
-  baseURL: "http://localhost:8081/musicspring/api", // Spring Boot backend root
-});
+const API = axios.create({ baseURL });
 
 // ================== AUTH ==================
 export const signIn = async (email, password) => {
   try {
-    const response = await axios.post("http://localhost:8081/user/signin", {
-      emailid: email,
-      password,
-    });
+    const response = await axios.post(
+      "http://localhost:8081/user/signin",
+      { emailid: email, password }
+    );
     // Backend returns something like: 200::John Doe::<token>
     return response.data.replace(/['"]+/g, "").trim();
   } catch (error) {
@@ -22,12 +28,10 @@ export const signIn = async (email, password) => {
 
 export const signUp = async (fullname, email, password, role) => {
   try {
-    const response = await axios.post("http://localhost:8081/user/signup", {
-      fullname,
-      emailid: email,
-      password,
-      role,
-    });
+    const response = await axios.post(
+      "http://localhost:8081/user/signup",
+      { fullname, emailid: email, password, role }
+    );
     return response.data.replace(/['"]+/g, "").trim();
   } catch (error) {
     console.error("SignUp Error:", error.response || error.message);
