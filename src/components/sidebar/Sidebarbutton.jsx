@@ -1,22 +1,28 @@
-import React, { use } from 'react'
-import { Link, useLocation} from 'react-router-dom';
+import React from 'react';
+import { Link, useLocation } from 'react-router-dom';
 import { IconContext } from 'react-icons';
 import './Sidebarbutton.css';
+
 function Sidebarbutton(props) {
-    const loaction = useLocation();
+  const location = useLocation();
 
-    const isActive = location.pathname === props.to;
+  // ✅ check if path matches OR starts with it
+  const isActive =
+    props.to === "/player/1"
+      ? location.pathname.startsWith("/player") // for player dynamic routes
+      : location.pathname === props.to;
 
-    const btnClass = isActive ? 'btn-body active' : 'btn-body';
+  const btnClass = isActive ? 'btn-body active' : 'btn-body';
+
   return (
     <Link to={props.to}>
-        <div className={btnClass}>
-        <IconContext.Provider value={{size: "24px", className: "btn-icon"}}>
-            {props.icon}
-            <p className="btn-title">{props.title}</p>
-            </IconContext.Provider>
-        </div>
-        </Link>
+      <div className={btnClass}>
+        <IconContext.Provider value={{ size: "24px", className: "btn-icon" }}>
+          {props.icon}
+          <p className="btn-title">{props.title}</p>
+        </IconContext.Provider>
+      </div>
+    </Link>
   );
 }
 

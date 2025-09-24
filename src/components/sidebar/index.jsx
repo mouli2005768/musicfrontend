@@ -1,5 +1,5 @@
 import React from "react";
-import "./Sidebar.css";
+import "./sidebar.css";
 import Sidebarbutton from "./Sidebarbutton";
 
 import { MdFavorite, MdLogout, MdSpaceDashboard } from "react-icons/md";

@@ -1,6 +1,6 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
-import Library from "../library";
+import Library from "../Library";
 import Feed from "../Feed";
 import Player from "../Player";
 import Favourites from "../Favourites";
@@ -19,6 +19,7 @@ function Home({ fullname, setUser, setPage }) {
         <Route path="/feed" element={<Feed />} />
         <Route path="/player/:id" element={<Player />} />
         <Route path="/favourites" element={<Favourites />} />
+        <Route path="/premium" element={<Library />} />  {/* ✅ Add this */}
       </Routes>
     </div>
   );

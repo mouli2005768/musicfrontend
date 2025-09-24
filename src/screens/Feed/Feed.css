@@ -2,10 +2,12 @@
 .feed-container {
   flex: 1;
   padding: 20px;
-  background: #121212; /* Spotify-like dark */
+  background: #121212;
   color: white;
   overflow-y: auto;
   border-radius: 10px;
+  min-height: 100vh;
+  box-sizing: border-box;
 }
 
 /* GRID LAYOUT FOR SONGS */
@@ -14,13 +16,14 @@
   grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
   gap: 25px;
   margin-top: 20px;
+  margin-bottom: 40px;
 }
 
 /* SONG CARD STYLE */
 .song-card {
   background: rgba(24, 24, 24, 0.9);
   border-radius: 15px;
-  overflow: hidden; /* make image & text fit */
+  overflow: hidden;
   transition: transform 0.25s ease, box-shadow 0.25s ease,
               background 0.3s ease;
   cursor: pointer;
@@ -34,36 +37,29 @@
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6);
 }
 
-/* SONG COVER IMAGE */
+/* SONG COVER IMAGE (now fills the card nicely) */
 .song-cover {
   width: 100%;
-  height: 250px; /* image fills most of card */
-  object-fit: cover;
+  height: 280px;      /* bigger cover */
+  object-fit: cover;  /* cover entire area without distortion */
+  display: block;
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-  flex-shrink: 0;
 }
 
-/* SONG TITLE (scroll if too long) */
+/* SONG TITLE */
 .song-card h3 {
   font-size: 16px;
   font-weight: 600;
   color: #fff;
-  margin: 8px 10px 4px;
+  margin: 12px 12px 6px;  /* more spacing */
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  animation: marquee 8s linear infinite;
-}
-
-/* MARQUEE EFFECT */
-@keyframes marquee {
-  0%   { text-indent: 0; }
-  100% { text-indent: -100%; }
 }
 
 /* SONG DESCRIPTION */
 .song-card p {
   font-size: 14px;
   color: #bbb;
-  margin: 0 10px 10px;
+  margin: 0 12px 12px; /* nice padding below */
 }
