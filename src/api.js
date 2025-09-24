@@ -1,12 +1,7 @@
 import axios from "axios";
 
 // Detect backend base URL dynamically
-let baseURL = "http://localhost:8081/api"; // default (local run)
-
-// If backend is running inside Tomcat with "musicspring" context
-if (window.location.href.includes("musicspring")) {
-  baseURL = "http://localhost:8081/musicspring/api";
-}
+let baseURL = "http://localhost:8080/musicspring/api"; // default for Tomcat
 
 // ✅ Base axios instance
 const API = axios.create({ baseURL });
@@ -15,7 +10,7 @@ const API = axios.create({ baseURL });
 export const signIn = async (email, password) => {
   try {
     const response = await axios.post(
-      "http://localhost:8081/user/signin",
+      "http://localhost:8080/musicspring/user/signin",
       { emailid: email, password }
     );
     // Backend returns something like: 200::John Doe::<token>
@@ -29,7 +24,7 @@ export const signIn = async (email, password) => {
 export const signUp = async (fullname, email, password, role) => {
   try {
     const response = await axios.post(
-      "http://localhost:8081/user/signup",
+      "http://localhost:8080/musicspring/user/signup",
       { fullname, emailid: email, password, role }
     );
     return response.data.replace(/['"]+/g, "").trim();
