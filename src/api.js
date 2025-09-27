@@ -8,7 +8,7 @@ const API = axios.create({
 // ================== AUTH ==================
 export const signIn = async (email, password) => {
   try {
-    const response = await axios.post("http://localhost:8080/user/signin", {
+    const response = await axios.post("http://localhost:8080/api/user/signin", {
       emailid: email,
       password,
     });
@@ -22,7 +22,7 @@ export const signIn = async (email, password) => {
 
 export const signUp = async (fullname, email, password, role) => {
   try {
-    const response = await axios.post("http://localhost:8080/user/signup", {
+    const response = await axios.post("http://localhost:8080/api/user/signup", {
       fullname,
       emailid: email,
       password,
