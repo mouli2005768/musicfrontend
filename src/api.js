@@ -2,13 +2,13 @@ import axios from "axios";
 
 // ✅ Base axios instance
 const API = axios.create({
-  baseURL: "http://localhost:8081/api", // Spring Boot backend root
+  baseURL: "http://localhost:8080/api", // Spring Boot backend root
 });
 
 // ================== AUTH ==================
 export const signIn = async (email, password) => {
   try {
-    const response = await axios.post("http://localhost:8081/user/signin", {
+    const response = await axios.post("http://localhost:8080/user/signin", {
       emailid: email,
       password,
     });
@@ -22,7 +22,7 @@ export const signIn = async (email, password) => {
 
 export const signUp = async (fullname, email, password, role) => {
   try {
-    const response = await axios.post("http://localhost:8081/user/signup", {
+    const response = await axios.post("http://localhost:8080/user/signup", {
       fullname,
       emailid: email,
       password,
