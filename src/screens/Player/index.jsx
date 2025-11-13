@@ -1,7 +1,14 @@
 // src/screens/Player.jsx
 import React, { useState, useRef, useEffect } from "react";
 import { useLocation, useParams, useNavigate } from "react-router-dom";
-import { FaPlay, FaPause, FaStepForward, FaStepBackward, FaVolumeUp, FaArrowLeft } from "react-icons/fa";
+import {
+  FaPlay,
+  FaPause,
+  FaStepForward,
+  FaStepBackward,
+  FaVolumeUp,
+  FaArrowLeft,
+} from "react-icons/fa";
 import "./Player.css";
 
 function Player() {
@@ -16,12 +23,18 @@ function Player() {
   const songList = state?.songs || [];
   const song = songList[index];
 
+  // Update song when index changes
   useEffect(() => {
     if (audioRef.current && song?.songUrl) {
-      audioRef.current.load();
-      audioRef.current.play()
+      audioRef.current.src = song.songUrl;
+      audioRef.current.load(); // 🔑 important
+      audioRef.current
+        .play()
         .then(() => setIsPlaying(true))
-        .catch(err => console.warn("Autoplay blocked:", err));
+        .catch((err) => {
+          console.warn("Autoplay blocked:", err);
+          setIsPlaying(false);
+        });
     }
   }, [index, song]);
 
@@ -29,10 +42,13 @@ function Player() {
     if (!audioRef.current) return;
     if (isPlaying) {
       audioRef.current.pause();
+      setIsPlaying(false);
     } else {
-      audioRef.current.play();
+      audioRef.current
+        .play()
+        .then(() => setIsPlaying(true))
+        .catch((err) => console.warn("Play blocked:", err));
     }
-    setIsPlaying(!isPlaying);
   };
 
   const playNext = () => {
@@ -47,14 +63,16 @@ function Player() {
 
   const handleProgress = (e) => {
     const value = e.target.value;
-    if (audioRef.current) {
-      audioRef.current.currentTime = (value / 100) * audioRef.current.duration;
+    if (audioRef.current && audioRef.current.duration) {
+      audioRef.current.currentTime =
+        (value / 100) * audioRef.current.duration;
     }
   };
 
   const updateProgress = () => {
-    if (audioRef.current) {
-      const percent = (audioRef.current.currentTime / audioRef.current.duration) * 100;
+    if (audioRef.current && audioRef.current.duration) {
+      const percent =
+        (audioRef.current.currentTime / audioRef.current.duration) * 100;
       setProgress(percent || 0);
     }
   };
@@ -74,18 +92,14 @@ function Player() {
               className="player-cover"
             />
             <h2>{song.name}</h2>
-            <p>{song.description}</p>
+            <p>{song.album || "Unknown Album"}</p>
 
             <audio
               ref={audioRef}
               onTimeUpdate={updateProgress}
               onEnded={playNext}
-            >
-              <source src={song.songUrl} type="audio/mpeg" />
-              Your browser does not support audio.
-            </audio>
+            />
 
-            {/* White Progress bar */}
             <input
               type="range"
               min="0"
@@ -96,11 +110,15 @@ function Player() {
             />
 
             <div className="controls">
-              <button onClick={playPrev}><FaStepBackward /></button>
+              <button onClick={playPrev}>
+                <FaStepBackward />
+              </button>
               <button onClick={togglePlay}>
                 {isPlaying ? <FaPause /> : <FaPlay />}
               </button>
-              <button onClick={playNext}><FaStepForward /></button>
+              <button onClick={playNext}>
+                <FaStepForward />
+              </button>
             </div>
 
             <div className="volume">
@@ -116,7 +134,6 @@ function Player() {
               />
             </div>
 
-            {/* White music bars */}
             <div className="animation-bar">
               <span></span><span></span><span></span><span></span><span></span>
             </div>

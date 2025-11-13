@@ -1,21 +1,23 @@
 // src/screens/Admin/AddSongs.jsx
 import React, { useState } from "react";
-import { uploadSong } from "../../api"; // ✅ use shared API
+import { uploadSong } from "../../api";
 import "./AddSongs.css";
 
 function AddSongs() {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [file, setFile] = useState(null); 
-  const [imageUrl, setImageUrl] = useState("");
+  const [image, setImage] = useState(null);
   const [message, setMessage] = useState("");
 
-  // ✅ handle file select
   const handleFileChange = (e) => {
     setFile(e.target.files[0]);
   };
 
-  // ✅ handle submit
+  const handleImageChange = (e) => {
+    setImage(e.target.files[0]);
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -26,22 +28,19 @@ function AddSongs() {
 
     try {
       const formData = new FormData();
-      formData.append("file", file);
+      formData.append("file", file); // ✅ audio
+      if (image) formData.append("image", image); // ✅ image file
       formData.append("name", name);
       formData.append("description", description);
-      formData.append("imageUrl", imageUrl);
 
-      await uploadSong(formData); // ✅ use API function
+      await uploadSong(formData);
 
       setMessage("✅ Song uploaded successfully!");
-
-      // Reset form
       setName("");
       setDescription("");
       setFile(null);
-      setImageUrl("");
+      setImage(null);
 
-      // ✅ redirect to song list after upload
       setTimeout(() => {
         window.location.href = "/admin/listsongs";
       }, 1000);
@@ -76,14 +75,10 @@ function AddSongs() {
           <input type="file" accept="audio/*" onChange={handleFileChange} />
         </label>
 
+        {/* Upload Image */}
         <label>
-          Upload Image (Thumbnail URL)
-          <input
-            type="text"
-            placeholder="Paste image URL"
-            value={imageUrl}
-            onChange={(e) => setImageUrl(e.target.value)}
-          />
+          Upload Image (Thumbnail)
+          <input type="file" accept="image/*" onChange={handleImageChange} />
         </label>
 
         <button type="submit">Upload</button>

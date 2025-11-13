@@ -1,29 +1,29 @@
-const staticSongs = [
+const Songs = [
   {
     id: 1,
     name: "2-Ori Vaari",
     album: "Ori Album",
     imageUrl: "/images/dasara.jpg",
-    songUrl: "/audio/OriVaari.mp3",  // ✅ renamed (no space)
+    songUrl: "/audio/2-OriVaari.mp3",  // ✅ renamed (no space)
   },
   {
     id: 2,
     name: "Adiga",
     album: "Love Album",
     imageUrl: "/images/ninnukori.jpg",
-    songUrl: "/audio/Adiga.mp3",
+    songUrl: "/audio/adiga.mp3",
   },
   {
     id: 3,
     name: "Apna",
     album: "Bollywood Hits",
     imageUrl: "/images/bediya.jpg",
-    songUrl: "/audio/Apna.mp3",
+    songUrl: "/audio/apna.mp3",
   },
   {
     id: 4,
     name: "Needhele",
-    album: "Romantic",
+    album: "Melody",
     imageUrl: "/images/chinna.jpg",
     songUrl: "/audio/Needhele.mp3",
   },
@@ -57,4 +57,4 @@ const staticSongs = [
   },
 ];
 
-export default staticSongs;
+export default Songs;

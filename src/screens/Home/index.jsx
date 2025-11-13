@@ -1,6 +1,6 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
-import Library from "../Library";
+import Library from "../library";
 import Feed from "../Feed";
 import Player from "../Player";
 import Favourites from "../Favourites";

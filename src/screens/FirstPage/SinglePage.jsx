@@ -1,7 +1,13 @@
 import React from "react";
-import { FaMusic, FaLinkedin, FaInstagram, FaTelegram, FaUserCircle } from "react-icons/fa";
-import "./SinglePage.css"; // custom styling
-import { Link } from "react-router-dom";
+import {
+  FaMusic,
+  FaLinkedin,
+  FaInstagram,
+  FaTelegram,
+  FaUserCircle,
+} from "react-icons/fa";
+import "./SinglePage.css";
+
 function SinglePage({ goToSignIn }) {
   return (
     <div className="singlepage-container">
@@ -9,64 +15,79 @@ function SinglePage({ goToSignIn }) {
       <header className="header">
         <div className="logo">
           <FaMusic className="logo-icon" />
-          <h1>CrystalBeats</h1>
+          <h1>Porse</h1>
         </div>
+
         <nav className="nav-links">
           <a href="#about">About</a>
-          <a href="#tech">Tech</a>
-          <a href="#roles">Roles</a>
+          <a href="#impact">Impact</a>
+          <a href="#roles">Experience</a>
         </nav>
 
-        {/* ✅ Profile moved to header */}
-        
-<FaUserCircle className="signin-icon" onClick={goToSignIn} style={{ cursor: "pointer" }} />
+        <FaUserCircle
+          className="signin-icon"
+          onClick={goToSignIn}
+          style={{ cursor: "pointer" }}
+        />
       </header>
+        <section id="impact" className="impact-hero">
+          <div className="impact-left">
+            <h1>Music That Moves You</h1>
+            <p>
+              Experience the real power of music — crafted for emotion, focus,
+              motivation, and pure enjoyment.
+            </p>
+            <p>Let sound inspire your day.</p>
+            <button className="impact-btn">Explore More</button>
+          </div>
 
-      {/* Body */}
+          <div className="impact-right">
+            <img
+              src="https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4"
+              alt="mic"
+            />
+          </div>
+        </section>
+      {/* Main Body */}
       <main className="body">
-        {/* About */}
+
+        {/* About Section */}
         <section id="about" className="section about">
-          <h2>About the Project</h2>
+          <h2>About Porse</h2>
           <p>
-            CrystalBeats is a music management platform powered by Spring Boot,
-            React, and MySQL. It provides seamless music exploration,
-            personalized libraries, and a role-based access system.
+            Porse is a modern music space designed to give you a clean and simple
+            listening experience. Your favorite tracks, playlists, and vibe —
+            all in one smooth platform.
+          </p>
+          <p>
+            Whether you're exploring new tunes or curating your own collection,
+            Porse brings music closer to you.
           </p>
         </section>
 
-        {/* Technologies */}
-        <section id="tech" className="section tech">
-          <h2>Technologies Used</h2>
-          <div className="tech-grid">
-            <div className="tech-box">Spring Boot</div>
-            <div className="tech-box">React</div>
-            <div className="tech-box">MySQL</div>
-            <div className="tech-box">REST APIs</div>
-            <div className="tech-box">JWT Auth</div>
-            <div className="tech-box">Docker</div>
-          </div>
-        </section>
+        {/* HERO IMPACT (WYNK STYLE) */}
+        
 
-        {/* Roles */}
+        {/* Roles Section */}
         <section id="roles" className="section roles">
-          <h2>Roles & Functionalities</h2>
+          <h2>Experience Tailored for Everyone</h2>
           <div className="roles-grid">
-            <div className="role-card admin">
-              <h3>Admin</h3>
-              <ul>
-                <li>✔ Manage Songs</li>
-                <li>✔ Manage Users</li>
-                <li>✔ Dashboard with Insights</li>
-              </ul>
-            </div>
+
+            
+
             <div className="role-card user">
-              <h3>User</h3>
+              <h3>🎵 User Experience</h3>
+              <p>
+                Created for music lovers. Build your vibe, enjoy your favorites,
+                and make playlists that feel like you.
+              </p>
               <ul>
-                <li>✔ Explore Music</li>
-                <li>✔ Create Favourites</li>
-                <li>✔ Play & Enjoy 🎶</li>
+                <li>💖 Add and store favorites</li>
+                <li>🎶 Personal playlist creation</li>
+                <li>📱 Smooth listening on all devices</li>
               </ul>
             </div>
+
           </div>
         </section>
       </main>
@@ -74,41 +95,43 @@ function SinglePage({ goToSignIn }) {
       {/* Footer */}
       <footer className="footer">
         <div className="footer-content">
+
           <div className="footer-logo">
             <FaMusic className="footer-logo-icon" />
-            <span>CrystalBeats</span>
+            <span>Porse</span>
           </div>
 
           <div className="footer-sections">
             <div>
               <h4>About</h4>
               <ul>
-                <li>Company</li>
+                <li>Our Story</li>
                 <li>Careers</li>
                 <li>Blog</li>
               </ul>
             </div>
+
             <div>
               <h4>Support</h4>
               <ul>
-                <li>Help</li>
-                <li>Docs</li>
-                <li>Contact</li>
+                <li>Help Center</li>
+                <li>Documentation</li>
+                <li>Contact Us</li>
               </ul>
             </div>
           </div>
 
           <div className="footer-right">
             <div className="social-icons">
-              <FaLinkedin />
-              <FaInstagram />
-              <FaTelegram />
+              <FaLinkedin onClick="https://www.linkedin.com/in/kaka-mouli-brahma-b401b4324/"/>
+              <FaInstagram onClick=""/>
+              <FaTelegram onClick=""/>
             </div>
-            {/* ❌ Removed profile icon from here */}
           </div>
         </div>
+
         <p className="copyright">
-          © 2025 CrystalBeats. All rights reserved.
+          © {new Date().getFullYear()} Porse. All rights reserved.
         </p>
       </footer>
     </div>

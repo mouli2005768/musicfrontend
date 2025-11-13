@@ -1,13 +1,15 @@
-// src/screens/Feed.jsx
 import React, { useEffect, useState } from "react";
-import { getSongs } from "../../api";
+import { getSongs, addFavourite, getUserFavourites } from "../../api";
 import { useNavigate } from "react-router-dom";
-import staticSongs from "./songs"; // ✅ import static list
+import Songs from "./songs";
+import { Heart } from "lucide-react";
 import "./Feed.css";
 
 function Feed() {
   const [songs, setSongs] = useState([]);
+  const [favorites, setFavorites] = useState([]);
   const navigate = useNavigate();
+  const email = localStorage.getItem("email");
 
   useEffect(() => {
     fetchSongs();
@@ -18,31 +20,28 @@ function Feed() {
       const res = await getSongs();
       const dbSongs = res.data || [];
 
-      // ✅ Normalize both static + DB to use songUrl
       const formattedDbSongs = dbSongs.map((s) => ({
+        key: `db-${s.id}`,
         id: s.id,
         name: s.name,
-        album: s.album || "Unknown Album",
+        album: s.description || s.album?.name || "No Description",
         imageUrl: s.imageUrl,
-        songUrl: s.songUrl, // ⚡ Player expects this
+        songUrl: s.songUrl,
       }));
 
-      const formattedStaticSongs = staticSongs.map((s) => ({
+      const formattedStaticSongs = Songs.map((s, idx) => ({
+        key: `static-${idx}`,
         ...s,
-        songUrl: s.audioUrl, // ⚡ rename for Player.jsx
       }));
 
-      // ✅ Merge static + DB
       setSongs([...formattedStaticSongs, ...formattedDbSongs]);
+
+      // ✅ Load existing favourites from backend
+      const favRes = await getUserFavourites(email);
+      const favIds = favRes.data.map((s) => s.id);
+      setFavorites(favIds);
     } catch (err) {
       console.error("Error loading songs:", err);
-
-      // fallback → static only
-      const formattedStaticSongs = staticSongs.map((s) => ({
-        ...s,
-        songUrl: s.audioUrl,
-      }));
-      setSongs(formattedStaticSongs);
     }
   };
 
@@ -50,6 +49,23 @@ function Feed() {
     navigate(`/player/${index}`, {
       state: { songs, currentIndex: index },
     });
+  };
+
+  const handleFavouriteClick = async (e, song) => {
+    e.stopPropagation();
+
+    // ✅ Skip static songs (no DB id)
+    if (!song.id) {
+      alert("This static song cannot be added to favourites.");
+      return;
+    }
+
+    try {
+      await addFavourite(email, song.id);
+      setFavorites([...favorites, song.id]); // update state immediately
+    } catch (err) {
+      console.error("Error adding favourite:", err);
+    }
   };
 
   return (
@@ -61,7 +77,7 @@ function Feed() {
         <div className="song-grid">
           {songs.map((song, index) => (
             <div
-              key={song.id || index}
+              key={song.key}
               className="song-card"
               onClick={() => handleSongClick(index)}
             >
@@ -72,6 +88,19 @@ function Feed() {
               />
               <h3>{song.name}</h3>
               <p>{song.album || "No Album Info"}</p>
+
+              {/* ❤️ Favourite Icon */}
+              <div
+                className="favorite-icon"
+                onClick={(e) => handleFavouriteClick(e, song)}
+                title="Add to Favourites"
+              >
+                <Heart
+                  color={favorites.includes(song.id) ? "red" : "gray"}
+                  fill={favorites.includes(song.id) ? "red" : "none"}
+                  size={24}
+                />
+              </div>
             </div>
           ))}
         </div>

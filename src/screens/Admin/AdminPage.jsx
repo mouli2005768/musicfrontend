@@ -8,9 +8,11 @@ import AddSongs from "./AddSongs";
 import ListSongs from "./ListSongs";
 import AddAlbum from "./AddAlbum";
 import ListAlbum from "./ListAlbum";
+import AdminDashboard from "./AdminDashboard";
 
 // Icons
-import { FaPlus, FaList, FaCompactDisc, FaSignOutAlt } from "react-icons/fa";
+import { FaChartPie, FaPlus, FaList, FaCompactDisc, FaSignOutAlt } from "react-icons/fa";
+
 import { MdLibraryMusic } from "react-icons/md";
 
 function AdminPage({ fullname, setUser, setPage }) {
@@ -27,6 +29,7 @@ function AdminPage({ fullname, setUser, setPage }) {
         <h2 className="logo">🎵 Admin Dashboard</h2>
         <p className="welcome">Welcome, {fullname}</p>
         <div className="menu">
+          <SideButton title="Dashboard" to="dashboard" icon={<FaChartPie />} />
           <SideButton title="Add Song" to="addsongs" icon={<FaPlus />} />
           <SideButton title="List Songs" to="listsongs" icon={<FaList />} />
           <SideButton title="Add Album" to="addalbum" icon={<FaCompactDisc />} />
@@ -45,10 +48,12 @@ function AdminPage({ fullname, setUser, setPage }) {
       {/* Main Content */}
       <main className="main-content">
         <Routes>
+          <Route path="dashboard" element={<AdminDashboard />} />
           <Route path="addsongs" element={<AddSongs />} />
           <Route path="listsongs" element={<ListSongs />} />
           <Route path="addalbum" element={<AddAlbum />} />
           <Route path="listalbums" element={<ListAlbum />} />
+          
           <Route path="/" element={<h2>👋 Welcome to Admin Dashboard</h2>} />
         </Routes>
       </main>

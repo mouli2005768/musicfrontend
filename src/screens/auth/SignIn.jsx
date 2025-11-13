@@ -1,6 +1,6 @@
 import { useState } from "react";
 import "./SignIn.css";
-import { signIn, signUp } from "../../api"; // adjust the path if needed
+import { signIn, signUp } from "../../api"; // adjust path if needed
 
 function SignIn({ setUser }) {
   const [tab, setTab] = useState("login");
@@ -17,34 +17,44 @@ function SignIn({ setUser }) {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
- const handleLogin = async () => {
-  if (!form.emailid || !form.password) {
-    setMessage("Please enter Email and Password");
-    return;
-  }
+  // ✅ LOGIN HANDLER
+  const handleLogin = async () => {
+    if (!form.emailid || !form.password) {
+      setMessage("Please enter Email and Password");
+      return;
+    }
 
-  const result = await signIn(form.emailid, form.password);
+    try {
+      const result = await signIn(form.emailid, form.password);
 
-  if (result.startsWith("200::")) {
-    // Example: "200::John Doe::1::<token>"
-    const parts = result.split("::");
-    const fullname = parts[1];
-    const role = parts[2];
-    const token = parts[3];
+      if (result.startsWith("200::")) {
+        // Example from backend: "200::John Doe::1::<token>"
+        const parts = result.split("::");
+        const fullname = parts[1];
+        const role = parts[2];
+        const token = parts[3];
+        const email = form.emailid; // capture email used for login
 
-    localStorage.setItem("token", token);
-    localStorage.setItem("role", role);
+        // ✅ Store user details locally
+        localStorage.setItem("token", token);
+        localStorage.setItem("role", role);
+        localStorage.setItem("fullname", fullname);
+        localStorage.setItem("email", email);
 
-    // Pass fullname + role to App.jsx
-    setUser({ fullname, role });
+        // ✅ Pass user data to App.jsx (parent)
+        setUser({ fullname, email, role });
 
-    setMessage("Login successful!");
-  } else {
-    setMessage(result.split("::")[1] || "Invalid Credentials");
-  }
-};
+        setMessage("Login successful!");
+      } else {
+        setMessage(result.split("::")[1] || "Invalid Credentials");
+      }
+    } catch (err) {
+      console.error("Login Error:", err);
+      setMessage("Server error. Try again later.");
+    }
+  };
 
-
+  // ✅ REGISTER HANDLER
   const handleRegister = async () => {
     if (!form.fullname || !form.emailid || !form.password) {
       setMessage("Please fill all required fields");
@@ -54,17 +64,24 @@ function SignIn({ setUser }) {
       setMessage("Passwords do not match");
       return;
     }
-    const result = await signUp(
-      form.fullname,
-      form.emailid,
-      form.password,
-      parseInt(form.role)
-    );
-    if (result.startsWith("200::")) {
-      setMessage(result.split("::")[1] || "Registration successful!");
-      setTab("login");
-    } else {
-      setMessage(result.split("::")[1] || "Registration failed");
+
+    try {
+      const result = await signUp(
+        form.fullname,
+        form.emailid,
+        form.password,
+        parseInt(form.role)
+      );
+
+      if (result.startsWith("200::")) {
+        setMessage(result.split("::")[1] || "Registration successful!");
+        setTab("login");
+      } else {
+        setMessage(result.split("::")[1] || "Registration failed");
+      }
+    } catch (err) {
+      console.error("Signup Error:", err);
+      setMessage("Server error. Try again later.");
     }
   };
 
@@ -105,6 +122,7 @@ function SignIn({ setUser }) {
               value={form.emailid}
               onChange={handleChange}
             />
+
             <label>Password</label>
             <input
               type="password"
@@ -123,7 +141,11 @@ function SignIn({ setUser }) {
             </button>
 
             {message && (
-              <p className={`status-msg ${message === "Login successful!" ? "" : "error"}`}>
+              <p
+                className={`status-msg ${
+                  message === "Login successful!" ? "" : "error"
+                }`}
+              >
                 {message}
               </p>
             )}
@@ -145,6 +167,7 @@ function SignIn({ setUser }) {
               value={form.fullname}
               onChange={handleChange}
             />
+
             <label>Email ID</label>
             <input
               type="email"
@@ -153,6 +176,7 @@ function SignIn({ setUser }) {
               value={form.emailid}
               onChange={handleChange}
             />
+
             <label>Password</label>
             <input
               type="password"
@@ -161,6 +185,7 @@ function SignIn({ setUser }) {
               value={form.password}
               onChange={handleChange}
             />
+
             <label>Confirm Password</label>
             <input
               type="password"
@@ -169,11 +194,12 @@ function SignIn({ setUser }) {
               value={form.confirm}
               onChange={handleChange}
             />
+
             <label>Role</label>
             <select name="role" value={form.role} onChange={handleChange}>
               <option value="0">User</option>
               <option value="1">Admin</option>
-              <option value="2">Manager</option>
+              
             </select>
 
             <button className="submit-btn" onClick={handleRegister}>

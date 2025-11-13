@@ -1,25 +1,24 @@
-# ---------- Stage 1: Build ----------
-FROM node:20
+# Stage 1: Build with Vite
+FROM node:20-alpine AS builder
+
 WORKDIR /app
+
+# Copy package.json and install dependencies
 COPY package*.json ./
 RUN npm install
+
+# Copy the rest of the source code
 COPY . .
-EXPOSE 5173
-CMD ["npm", "run", "dev", "--", "--host"]
+RUN npm run build
 
-
-# ---------- Stage 2: Run ----------
+# Stage 2: Serve with Nginx
 FROM nginx:alpine
-WORKDIR /usr/share/nginx/html
 
-# Remove default nginx static files
-RUN rm -rf ./*
+# Remove default Nginx content
+RUN rm -rf /usr/share/nginx/html/*
 
-# Copy build output from Stage 1
-COPY --from=builder /app/dist ./
+# Copy build output
+COPY --from=builder /app/dist /usr/share/nginx/html
 
-# Expose nginx port
 EXPOSE 80
-
-# Run nginx
 CMD ["nginx", "-g", "daemon off;"]
